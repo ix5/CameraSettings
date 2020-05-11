@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Camera Settings</string>
+
+    <string name="pref_lift_trigger_title">Camera Lift Trigger</string>
+    <string name="pref_lift_trigger_summary">Launch camera when device is lifted</string>
+
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="summary_empty" translatable="false"></string>
+
+</resources>
+
