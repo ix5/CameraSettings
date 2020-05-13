@@ -26,19 +26,27 @@ import androidx.preference.SwitchPreferenceCompat
 
 private const val TAG = "CameraSettings"
 
-private const val CAMERA_LIFT_TRIGGER_ENABLED: String = "camera_lift_trigger_enabled"
-private const val CAMERA_LIFT_TRIGGER_ENABLED_DEFAULT: Int = 1
-
 class SettingsSwitchPreferenceCompat(ctx: Context, attrs: AttributeSet) : SwitchPreferenceCompat(ctx, attrs) {
     private val userId = UserHandle.myUserId()
 
+    // Settings key is mandatory, but nullable because it is evaluated when the class is unparceled without a constructor invocation
+    private val settingsKey: String? = attrs.getAttributeValue("http://schemas.android.com/apk/res/org.ix5.camerasettings", "settings_key")
+            ?: throw Exception("settings_key is null!")
+    private val defaultValue: Int = attrs.getAttributeIntValue("http://schemas.android.com/apk/res/org.ix5.camerasettings", "settings_default_value", 0)
+
     override fun isChecked(): Boolean {
+        // WARNING: isChecked is called to create a parcel BEFORE the constructor is invoked
+        if (settingsKey == null) {
+            Log.e(TAG, "isChecked: settingsKey is unset")
+            return false
+        }
+        Log.i(TAG, "isChecked for $settingsKey")
         val contentResolver: ContentResolver? = context.getContentResolver()
         return if (contentResolver != null) {
             (Settings.Secure.getIntForUser(
                     contentResolver,
-                    CAMERA_LIFT_TRIGGER_ENABLED,
-                    CAMERA_LIFT_TRIGGER_ENABLED_DEFAULT,
+                    settingsKey,
+                    defaultValue,
                     userId
             ) == 1).also { Log.w(TAG, "isChecked: Value is $it") }
         } else {
@@ -48,14 +56,19 @@ class SettingsSwitchPreferenceCompat(ctx: Context, attrs: AttributeSet) : Switch
     }
 
     override fun setChecked(checked: Boolean) {
+        if (settingsKey == null) {
+            Log.e(TAG, "setChecked: settingsKey is unset")
+            return
+        }
+
         val storageVal = if (checked) 1 else 0
-        //return Settings.Secure.putInt(mContext?.getContentResolver(), CAMERA_LIFT_TRIGGER_ENABLED, storageVal)
+        //return Settings.Secure.putInt(mContext?.getContentResolver(), settings_key, storageVal)
         val contentResolver: ContentResolver? = context.getContentResolver()
         if (contentResolver != null) {
-            Log.w(TAG, "setChecked: Putting $CAMERA_LIFT_TRIGGER_ENABLED to $storageVal")
+            Log.w(TAG, "setChecked: Putting $settingsKey to $storageVal")
             Settings.Secure.putIntForUser(
                     contentResolver,
-                    CAMERA_LIFT_TRIGGER_ENABLED,
+                    settingsKey,
                     storageVal,
                     userId
             ).also {
