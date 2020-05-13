@@ -1,13 +1,10 @@
 package org.ix5.camerasettings
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-
-import org.ix5.camerasettings.R
+import androidx.fragment.app.FragmentActivity
 
 
-class CameraSettingsActivity : AppCompatActivity() {
-
+class CameraSettingsActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportFragmentManager
@@ -15,5 +12,4 @@ class CameraSettingsActivity : AppCompatActivity() {
                 .replace(android.R.id.content, CameraSettingsFragment())
                 .commit()
     }
-
 }
