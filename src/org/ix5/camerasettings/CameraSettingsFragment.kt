@@ -1,9 +1,7 @@
 package org.ix5.camerasettings
 
 import android.os.Bundle
-import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreferenceCompat
 
 private const val TAG = "CameraSettingsFragment"
 
@@ -16,5 +14,7 @@ class CameraSettingsFragment : PreferenceFragmentCompat() {
         // TODO: Update summary
     }
 
-    private fun isGestureAvailable() = context?.resources?.getInteger(com.android.internal.R.integer.config_cameraLiftTriggerSensorType) != -1
+    private fun isGestureAvailable() = context?.resources?.getInteger(
+            com.android.internal.R.integer.config_cameraLiftTriggerSensorType
+    ) != -1
 }

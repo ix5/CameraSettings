@@ -30,9 +30,15 @@ class SettingsSwitchPreferenceCompat(ctx: Context, attrs: AttributeSet) : Switch
     private val userId = UserHandle.myUserId()
 
     // Settings key is mandatory, but nullable because it is evaluated when the class is unparceled without a constructor invocation
-    private val settingsKey: String? = attrs.getAttributeValue("http://schemas.android.com/apk/res/org.ix5.camerasettings", "settings_key")
-            ?: throw Exception("settings_key is null!")
-    private val defaultValue: Int = attrs.getAttributeIntValue("http://schemas.android.com/apk/res/org.ix5.camerasettings", "settings_default_value", 0)
+    private val settingsKey: String? = attrs.getAttributeValue(
+            "http://schemas.android.com/apk/res/org.ix5.camerasettings",
+            "settings_key"
+    ) ?: throw Exception("settings_key is null!")
+    private val defaultValue: Int = attrs.getAttributeIntValue(
+            "http://schemas.android.com/apk/res/org.ix5.camerasettings",
+            "settings_default_value",
+            0
+    )
 
     override fun isChecked(): Boolean {
         // WARNING: isChecked is called to create a parcel BEFORE the constructor is invoked
