@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:camerasettings="http://schemas.android.com/apk/res/org.ix5.camerasettings">
+    xmlns:camerasettings="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <org.ix5.camerasettings.SettingsSwitchPreferenceCompat
-        app:key="pref_lift_trigger"
-        app:title="@string/pref_lift_trigger_title"
+        android:key="pref_lift_trigger"
+        android:title="@string/pref_lift_trigger_title"
         camerasettings:settings_default_value="1"
         camerasettings:settings_key="camera_lift_trigger_enabled" />
 </PreferenceScreen>
